@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'ambre — Mediterranean Bistro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,100..1000&family=La+Belle+Aurore&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: oklch(14.07% 0.009 50.8);
+            --surface: oklch(18% 0.015 50);
+            --fg: oklch(92.83% 0.017 84.7);
+            --muted: oklch(30.4% 0.04 125);
+            --border: oklch(25% 0.02 60);
+            --accent: oklch(64.12% 0.147 75.83);
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-accent: 'La Belle Aurore', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 1s ease;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.3);
+            transform: scale(1.1);
+            transition: transform 0.1s ease-out;
+            z-index: -2;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+
+        .hero-name {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--fg);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-name span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(10px);
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: var(--fg);
+            opacity: 0;
+            transform: translateY(10px);
+            margin-bottom: 2rem;
+        }
+
+        .hero-rule {
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            margin: 0 auto;
+            opacity: 0.6;
+        }
+
+        /* --- Menu Section --- */
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--fg);
+        }
+
+        .menu-section {
+            padding: 10rem 5vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-areas:
+                "octopus octopus octopus octopus octopus octopus lamb lamb lamb burrata burrata burrata"
+                "octopus octopus octopus octopus octopus octopus lamb lamb lamb burrata burrata burrata"
+                "polenta polenta polenta bass bass bass bass bass mezze mezze mezze mezze"
+                "polenta polenta polenta bass bass bass bass bass mezze mezze mezze mezze"
+                "polenta polenta polenta kadayif kadayif kadayif kadayif cake cake cake cake cake"
+                "polenta polenta polenta kadayif kadayif kadayif kadayif cake cake cake cake cake"
+                "salad salad salad salad salad salad salad salad salad salad salad salad";
+            grid-auto-rows: clamp(130px, 10vw, 170px);
+            gap: clamp(1rem, 2vw, 1.5rem);
+            perspective: 1000px;
+        }
+
+        .menu-card {
+            position: relative;
+            background-color: var(--surface);
+            overflow: hidden;
+            height: 100%;
+            min-width: 0;
+            min-height: 0;
+            cursor: pointer;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
+            opacity: 0;
+            will-change: transform;
+        }
+
+        .menu-card.reveal-left { transform: translateX(-50px) rotate(-5deg); }
+        .menu-card.reveal-right { transform: translateX(50px) rotate(5deg); }
+        .menu-card.active { opacity: 1; transform: translateX(0) rotate(0); }
+
+        .menu-card img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            filter: grayscale(0.5) contrast(1.1) brightness(0.8);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+
+        .menu-card:hover img {
+            filter: grayscale(0) contrast(1) brightness(1);
+            transform: scale(1.018);
+        }
+
+        .menu-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(13, 11, 8, 0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: clamp(1.15rem, 2.1vw, 2rem);
+            transition: background 0.5s ease;
+        }
+
+        .menu-card:hover .menu-card-overlay {
+            background:
+                radial-gradient(circle at center, rgba(200, 133, 42, 0.08) 0%, transparent 68%),
+                linear-gradient(to bottom, transparent, rgba(13, 11, 8, 0.78));
+        }
+
+        .dish-name {
+            font-family: var(--font-accent);
+            font-size: clamp(2.15rem, 3.4vw, 3.2rem);
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .dish-desc {
+            font-family: var(--font-body);
+            font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--fg);
+            opacity: 0.7;
+        }
+
+        /* Authored mosaic layout */
+        .card-octopus { grid-area: octopus; }
+        .card-lamb { grid-area: lamb; }
+        .card-burrata { grid-area: burrata; }
+        .card-polenta { grid-area: polenta; }
+        .card-bass { grid-area: bass; }
+        .card-mezze { grid-area: mezze; }
+        .card-kadayif { grid-area: kadayif; }
+        .card-cake { grid-area: cake; }
+        .card-salad { grid-area: salad; }
+
+        .card-lamb .dish-name,
+        .card-burrata .dish-name,
+        .card-mezze .dish-name {
+            font-size: clamp(1.85rem, 2.55vw, 2.6rem);
+        }
+
+        @media (max-width: 1000px) {
+            .menu-grid {
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-areas:
+                    "octopus octopus octopus octopus octopus octopus"
+                    "octopus octopus octopus octopus octopus octopus"
+                    "lamb lamb lamb burrata burrata burrata"
+                    "lamb lamb lamb burrata burrata burrata"
+                    "polenta polenta bass bass bass bass"
+                    "polenta polenta bass bass bass bass"
+                    "polenta polenta mezze mezze mezze mezze"
+                    "polenta polenta mezze mezze mezze mezze"
+                    "kadayif kadayif kadayif cake cake cake"
+                    "kadayif kadayif kadayif cake cake cake"
+                    "salad salad salad salad salad salad";
+                grid-auto-rows: clamp(120px, 17vw, 150px);
+            }
+        }
+
+        /* --- About Section --- */
+        .about-section {
+            display: flex;
+            min-height: 100vh;
+            padding: 10rem 5vw;
+            gap: 5vw;
+            align-items: center;
+            position: relative;
+        }
+
+        .about-image {
+            flex: 1;
+            height: 80vh;
+            background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=1000');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(
+                0% 0%, 100% 5%, 95% 45%, 100% 100%, 
+                50% 95%, 5% 100%, 0% 50%, 5% 10%
+            );
+            filter: sepia(0.3) contrast(1.1);
+        }
+
+        .about-content {
+            flex: 1;
+            padding-right: 5vw;
+        }
+
+        .about-counter {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .about-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            line-height: 1.4;
+            color: var(--fg);
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* --- Reservation Section --- */
+        .reservation-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        #reservation-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000;
+        }
+
+        .reservation-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reservation-card h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--fg);
+        }
+
+        .reservation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .reservation-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            color: var(--fg);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .reservation-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-reserve {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 1.2rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-reserve:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .laurel-svg {
+            position: absolute;
+            width: 150px;
+            height: auto;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .laurel-left { left: -80px; top: 50%; transform: translateY(-50%) rotate(-10deg) translateX(-20px); }
+        .laurel-right { right: -80px; top: 50%; transform: translateY(-50%) rotate(10deg) translateX(20px); }
+
+        .reservation-card.in-view .laurel-svg {
+            opacity: 0.3;
+            transform: translateY(-50%) rotate(0) translateX(0);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background:
+                linear-gradient(135deg, rgba(200, 133, 42, 0.08), transparent 34%),
+                linear-gradient(to bottom, var(--bg), #090806);
+            padding: 7rem 5vw 3rem;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-bg-mark {
+            position: absolute;
+            bottom: -35px;
+            right: 4%;
+            font-family: var(--font-display);
+            font-size: clamp(9rem, 30vw, 28rem);
+            font-style: italic;
+            line-height: 1;
+            color: var(--fg);
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(280px, 1.2fr) repeat(2, minmax(190px, 0.6fr));
+            gap: clamp(2rem, 6vw, 6rem);
+            align-items: start;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: clamp(2.7rem, 7vw, 5.5rem);
+            line-height: 0.9;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-note {
+            max-width: 620px;
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 3vw, 2.35rem);
+            line-height: 1.15;
+            color: var(--fg);
+            opacity: 0.92;
+        }
+
+        .footer-note strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .footer-kicker,
+        .footer-links h4 {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .footer-links p {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            margin-bottom: 0.7rem;
+            color: var(--fg);
+            opacity: 0.72;
+        }
+
+        .footer-links a {
+            color: var(--fg);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(200, 133, 42, 0.45);
+            transition: color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .footer-bottom {
+            position: relative;
+            z-index: 1;
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Demo Badge --- */
+        .demo-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1.5rem;
+            z-index: 1000;
+            max-width: 320px;
+            border: 1px solid var(--accent);
+            transform: translateY(150%);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .demo-badge.visible {
+            transform: translateY(0);
+        }
+
+        .demo-badge .badge-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--fg);
+            opacity: 0.6;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .demo-badge .studio-name {
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .demo-badge .fiverr-link {
+            font-family: var(--font-body);
+            color: var(--fg);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .demo-badge .fiverr-link:hover {
+            border-color: var(--accent);
+        }
+
+        /* --- Utilities & Animations --- */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 133, 42, 0.1);
+        }
+
+        @keyframes revealLetter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes revealTagline {
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes drawRule {
+            to {
+                width: 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #hero-canvas { display: none; }
+            .hero-bg { transform: scale(1); filter: blur(4px) brightness(0.3); }
+            .hero-name { font-size: 4rem; }
+            .section-title { font-size: 3rem; margin-bottom: 2rem; }
+            .menu-grid { display: flex; flex-direction: column; }
+            .menu-card { width: 100%; height: auto; aspect-ratio: 1/1 !important; }
+            .about-section { flex-direction: column; padding: 5rem 5vw; }
+            .about-image { width: 100%; height: 50vh; order: 1; }
+            .about-content { order: 2; padding-right: 0; text-align: center; }
+            .menu-section { padding: 5rem 5vw; }
+            .reservation-card { padding: 2rem; }
+            .laurel-svg { display: none; }
+            .footer { padding-top: 5rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; }
+            .demo-badge {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <h1 class="hero-name" id="hero-name">L'ambre</h1>
+            <p class="hero-tagline" id="hero-tagline">Candlelit flavors from the Aegean coast.</p>
+            <div class="hero-rule" id="hero-rule"></div>
+        </div>
+    </section>
+
+    <section class="menu-section">
+        <h2 class="section-title">The Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-card card-octopus reveal-left">
+                <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=1200" alt="Spiced Lamb Flatbread">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Spiced Lamb Flatbread</h3>
+                    <p class="dish-desc">With Herb Yogurt & Charred Bread</p>
+                </div>
+            </div>
+            <div class="menu-card card-lamb reveal-right">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800" alt="Rosemary Beef Frites">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Rosemary Beef Frites</h3>
+                    <p class="dish-desc">Seared Beef, Fries & Port Jus</p>
+                </div>
+            </div>
+            <div class="menu-card card-burrata reveal-right">
+                <img src="https://images.unsplash.com/photo-1649400454485-b8ad827f929d?auto=format&fit=crop&q=80&w=1200" alt="Burrata with tomatoes">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Sunset Burrata</h3>
+                    <p class="dish-desc">Tomato, Basil Oil & Aged Balsamic</p>
+                </div>
+            </div>
+            <div class="menu-card card-polenta reveal-left">
+                <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Polenta_con_funghi.jpg?width=1200" alt="Truffled Polenta with mushrooms">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Truffled Polenta</h3>
+                    <p class="dish-desc">Wild Mushroom & Parmesan Cream</p>
+                </div>
+            </div>
+            <div class="menu-card card-bass reveal-right">
+                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=1000" alt="Aegean fish fillet">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Aegean Fish Fillet</h3>
+                    <p class="dish-desc">Pan-seared with Herb Infusion</p>
+                </div>
+            </div>
+            <div class="menu-card card-mezze reveal-left">
+                <img src="https://images.unsplash.com/photo-1743674453093-592bed88018e?auto=format&fit=crop&q=80&w=1200" alt="Mediterranean mezze platter">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Mezze Board</h3>
+                    <p class="dish-desc">Hummus, Tabbouleh & Warm Flatbread</p>
+                </div>
+            </div>
+            <div class="menu-card card-kadayif reveal-right">
+                <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Pistachio_Kadayif_(Unsplash).jpg?width=1200" alt="Pistachio kadayif dessert">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Pistachio Kadayif</h3>
+                    <p class="dish-desc">Rose Syrup & Clotted Cream</p>
+                </div>
+            </div>
+            <div class="menu-card card-cake reveal-left">
+                <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Lemon_olive_oil_cake_-_3300260329.jpg?width=1200" alt="Lemon olive oil cake">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Citrus Olive Cake</h3>
+                    <p class="dish-desc">Lemon Peel, Sea Salt & Cream</p>
+                </div>
+            </div>
+            <div class="menu-card card-salad reveal-right">
+                <img src="https://images.unsplash.com/photo-1757522745249-d9a075cf38de?auto=format&fit=crop&q=80&w=1200" alt="Halloumi fig kale salad">
+                <div class="menu-card-overlay">
+                    <h3 class="dish-name">Fig Halloumi Salad</h3>
+                    <p class="dish-desc">Kale, Grains & Toasted Almond</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about-section">
+        <div class="about-image"></div>
+        <div class="about-content">
+            <div class="about-counter" id="about-counter">Est. 0</div>
+            <blockquote class="about-text">
+                "Born from the salt-sprayed cliffs of the Aegean, L'ambre is a sanctuary where fire meets the sea. Our kitchen honors the ancient alchemy of wood-fired hearths and cold-pressed olives."
+            </blockquote>
+        </div>
+    </section>
+
+    <section class="reservation-section">
+        <canvas id="reservation-canvas"></canvas>
+        <div class="reservation-card glass" id="reservation-card">
+            <!-- Left Laurel -->
+            <svg class="laurel-svg laurel-left" viewBox="0 0 100 200">
+                <path d="M50,180 Q20,150 20,100 Q20,50 50,20" fill="none" stroke="var(--accent)" stroke-width="1" />
+                <path d="M20,100 L10,95 M20,120 L10,115 M20,80 L10,75 M20,140 L12,135 M20,60 L12,55" stroke="var(--accent)" stroke-width="1" />
+            </svg>
+            <!-- Right Laurel -->
+            <svg class="laurel-svg laurel-right" viewBox="0 0 100 200">
+                <path d="M50,180 Q80,150 80,100 Q80,50 50,20" fill="none" stroke="var(--accent)" stroke-width="1" />
+                <path d="M80,100 L90,95 M80,120 L90,115 M80,80 L90,75 M80,140 L88,135 M80,60 L88,55" stroke="var(--accent)" stroke-width="1" />
+            </svg>
+            
+            <h2>Book a Table</h2>
+            <form class="reservation-form">
+                <input type="text" placeholder="Name" required>
+                <input type="date" required>
+                <input type="time" required>
+                <input type="number" placeholder="Guests" min="1" max="10" required>
+                <button type="submit" class="btn-reserve">Request Invitation</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bg-mark">BLOK</div>
+        <div class="footer-content">
+            <div class="footer-showcase">
+                <p class="footer-kicker">Showcase demo</p>
+                <div class="footer-logo">L'ambre</div>
+                <p class="footer-note">
+                    This is not a real restaurant. L'ambre is a fictional hospitality concept built to showcase what <strong>BLOK. WebDev Studio</strong> can craft for dining, venue, and local business websites.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Demo status</h4>
+                <p>No bookings are submitted.</p>
+                <p>Addresses and menu items are fictional.</p>
+                <p>Images are used as visual placeholders.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Studio</h4>
+                <p>BLOK. WebDev Studio</p>
+                <p>Concept, interface, and frontend build.</p>
+                <p><a href="https://www.fiverr.com/musa_murad" target="_blank" rel="noreferrer">View the studio on Fiverr</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BLOK. WebDev Studio showcase.</p>
+            <p>Fictional brand, real web design demo.</p>
+        </div>
+    </footer>
+
+    <div class="demo-badge glass" id="demo-badge">
+        <span class="badge-label">DEMO SITE — Limited functionality</span>
+        <span class="studio-name">BLOK. WebDev Studio</span>
+        <a href="https://www.fiverr.com/musa_murad" target="_blank" class="fiverr-link">View on Fiverr &rarr;</a>
+    </div>
+
+    <script>
+        // --- Staggered Letter Animation ---
+        const nameElement = document.getElementById('hero-name');
+        const text = nameElement.textContent;
+        nameElement.innerHTML = '';
+        
+        [...text].forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.animation = `revealLetter 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards`;
+            span.style.animationDelay = `${0.1 * i}s`;
+            nameElement.appendChild(span);
+        });
+
+        // --- Tagline & Rule Animation ---
+        setTimeout(() => {
+            document.getElementById('hero-tagline').style.animation = 'revealTagline 1.5s ease-out forwards';
+            document.getElementById('hero-rule').style.animation = 'drawRule 2s cubic-bezier(0.19, 1, 0.22, 1) forwards';
+        }, 800);
+
+        // --- Canvas Particle System (Embers) ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.life = Math.random() * 1000 + 1000;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -10) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(200, 133, 42, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            resize();
+            particles = Array.from({ length: 100 }, () => new Particle());
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+
+        // --- Parallax Effect ---
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroBg = document.querySelector('.hero-bg');
+            if (window.innerWidth > 768) {
+                heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // --- Intersection Observer for Menu Reveal ---
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.menu-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // --- 3D Tilt Effect ---
+        document.querySelectorAll('.menu-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 48;
+                const rotateY = (centerX - x) / 48;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.006)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+            });
+        });
+
+        // --- Intersection Observer for About Section & Counter ---
+        const aboutSection = document.getElementById('about-section');
+        const counterElement = document.getElementById('about-counter');
+        let counterStarted = false;
+
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.body.style.backgroundColor = 'var(--muted)';
+                    if (!counterStarted) {
+                        startCounter(1987);
+                        counterStarted = true;
+                    }
+                } else {
+                    document.body.style.backgroundColor = 'var(--bg)';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        aboutObserver.observe(aboutSection);
+
+        function startCounter(target) {
+            let current = 0;
+            const duration = 2000;
+            const startTime = performance.now();
+
+            function update(timestamp) {
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+                
+                current = Math.floor(easedProgress * target);
+                counterElement.textContent = `Est. ${current}`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // --- Reservation Canvas (Smoke/Embers) ---
+        const rCanvas = document.getElementById('reservation-canvas');
+        const rCtx = rCanvas.getContext('2d');
+        let smokeParticles = [];
+
+        function rResize() {
+            rCanvas.width = window.innerWidth;
+            rCanvas.height = window.innerHeight;
+        }
+
+        class SmokeParticle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * rCanvas.width;
+                this.y = rCanvas.height + Math.random() * 100;
+                this.size = Math.random() * 80 + 40;
+                this.speedY = Math.random() * 0.4 + 0.1;
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.opacity = 0;
+                this.maxOpacity = Math.random() * 0.1 + 0.05;
+                this.fadeRate = 0.0005 + Math.random() * 0.001;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.opacity < this.maxOpacity && this.y > rCanvas.height * 0.5) {
+                    this.opacity += this.fadeRate;
+                } else {
+                    this.opacity -= this.fadeRate;
+                }
+                if (this.y < -this.size || this.opacity <= 0) this.reset();
+            }
+            draw() {
+                const gradient = rCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                gradient.addColorStop(0, `rgba(40, 30, 20, ${this.opacity})`);
+                gradient.addColorStop(1, 'transparent');
+                rCtx.fillStyle = gradient;
+                rCtx.beginPath();
+                rCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                rCtx.fill();
+            }
+        }
+
+        function rInit() {
+            rResize();
+            smokeParticles = Array.from({ length: 40 }, () => new SmokeParticle());
+            rAnimate();
+        }
+
+        function rAnimate() {
+            rCtx.fillStyle = '#0d0b08';
+            rCtx.fillRect(0, 0, rCanvas.width, rCanvas.height);
+            smokeParticles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(rAnimate);
+        }
+
+        window.addEventListener('resize', rResize);
+        rInit();
+
+        // --- Laurel Animation Observer ---
+        const resCard = document.getElementById('reservation-card');
+        const resObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    resCard.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        resObserver.observe(resCard);
+
+        // --- Demo Badge Visibility ---
+        setTimeout(() => {
+            document.getElementById('demo-badge').classList.add('visible');
+        }, 1000);
+    </script>
+</body>
+</html>

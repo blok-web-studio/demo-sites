@@ -1,0 +1,9 @@
+- [x] 1. Initialize project structure and bind brand tokens to :root
+- [x] 2. Build Hero section with canvas particle system and staggered text animation
+- [x] 3. Implement asymmetric Menu grid with 3D tilt effects and handwritten overlays
+- [x] 4. Create About section with clip-path image and scroll-driven "Est. 1987" counter
+- [x] 5. Build Reservation CTA with frosted glass form and SVG laurel animations
+- [x] 6. Design Footer with decorative ampersand and floating Demo Badge
+- [x] 7. Add mobile responsiveness (disable particles, collapse grids, adjust typography)
+- [x] 8. Self-check against checklist.md and 5-dim critique
+- [x] 9. Final artifact emission
