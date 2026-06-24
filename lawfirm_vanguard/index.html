@@ -760,7 +760,13 @@
 
     <script>
         // Demo badge slide-up trigger (hidden when embedded in iframe)
-        if (window.top === window.self) {
+        const params = new URLSearchParams(window.location.search);
+        let inIframe = params.has('embed');
+        if (!inIframe) {
+            try { inIframe = window.self !== window.top; }
+            catch(e) { inIframe = true; }
+        }
+        if (!inIframe) {
             setTimeout(() => document.querySelector('.demo-badge')?.classList.add('visible'), 1000);
         }
 

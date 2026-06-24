@@ -1804,7 +1804,17 @@ body{
    =================================================================== */
 (() => {
   // Hide badge when embedded in an iframe (admin preview)
-  if (window.top !== window.self) return;
+  const params = new URLSearchParams(window.location.search);
+  let inIframe = params.has('embed');
+  if (!inIframe) {
+    try { inIframe = window.self !== window.top; }
+    catch(e) { inIframe = true; }
+  }
+  if (inIframe) {
+    const badge = document.getElementById('demo-badge');
+    if (badge) badge.style.display = 'none';
+    return;
+  }
   const badge = document.getElementById('demo-badge');
   if (!badge) return;
   setTimeout(() => badge.classList.add('show'), 1000);
