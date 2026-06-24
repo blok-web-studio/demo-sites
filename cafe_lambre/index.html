@@ -981,9 +981,12 @@
         resObserver.observe(resCard);
 
         // --- Demo Badge Visibility ---
-        setTimeout(() => {
-            document.getElementById('demo-badge').classList.add('visible');
-        }, 1000);
+        // Hide badge when embedded in an iframe (admin preview)
+        if (window.top === window.self) {
+            setTimeout(() => {
+                document.getElementById('demo-badge')?.classList.add('visible');
+            }, 1000);
+        }
     </script>
 </body>
 </html>

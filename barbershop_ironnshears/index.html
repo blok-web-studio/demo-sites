@@ -1427,7 +1427,7 @@ body{
 </footer>
 
 <!-- ===== DEMO BADGE ===== -->
-<div class="demo-badge">
+<div class="demo-badge" id="demo-badge">
   <div class="notch"><div class="notch-inner"></div></div>
   <p class="badge-label">Demo Site — Limited Functionality</p>
   <p class="badge-studio">BLOK. WebDev Studio</p>
@@ -1435,8 +1435,12 @@ body{
     View on Fiverr <span class="arrow">→</span>
   </a>
 </div>
-
 <script>
+// Hide demo badge when embedded in iframe (admin preview)
+if (window.top !== window.self) {
+  document.getElementById('demo-badge')?.remove();
+}
+
 (function(){
   'use strict';
 

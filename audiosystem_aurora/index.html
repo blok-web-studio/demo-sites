@@ -1803,6 +1803,8 @@ body{
    DEMO BADGE — delayed appearance
    =================================================================== */
 (() => {
+  // Hide badge when embedded in an iframe (admin preview)
+  if (window.top !== window.self) return;
   const badge = document.getElementById('demo-badge');
   if (!badge) return;
   setTimeout(() => badge.classList.add('show'), 1000);

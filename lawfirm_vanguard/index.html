@@ -759,8 +759,10 @@
     </div>
 
     <script>
-        // Demo badge slide-up trigger
-        setTimeout(() => document.querySelector('.demo-badge')?.classList.add('visible'), 1000);
+        // Demo badge slide-up trigger (hidden when embedded in iframe)
+        if (window.top === window.self) {
+            setTimeout(() => document.querySelector('.demo-badge')?.classList.add('visible'), 1000);
+        }
 
         // Intersection Observer for Stats
         const observerOptions = {
