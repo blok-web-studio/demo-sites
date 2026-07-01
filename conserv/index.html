@@ -21,6 +21,30 @@
   <!-- Fixed botanical background -->
   <div class="bg-fixed" aria-hidden="true"></div>
 
+  <!-- Overgrown background vine border — wraps the page edges -->
+  <div class="bg-vines bg-vines--left" aria-hidden="true">
+    <svg viewBox="0 0 80 1000" fill="none" preserveAspectRatio="xMinYMin slice">
+      <path d="M-10 0 Q20 120 10 250 Q0 380 35 480 Q70 580 20 700 Q-30 820 10 1000" stroke="#1a6b3c" stroke-width="3" opacity="0.08" stroke-linecap="round" fill="none" />
+      <path d="M15 200 Q30 190 40 210" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M28 450 Q40 440 50 455" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M12 720 Q25 710 35 725" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M22 212 C26 205 32 205 28 212 Z" fill="#4ade80" opacity="0.08" />
+      <path d="M42 462 C46 455 52 455 48 462 Z" fill="#4ade80" opacity="0.08" />
+      <path d="M25 722 C29 715 35 715 31 722 Z" fill="#4ade80" opacity="0.08" />
+    </svg>
+  </div>
+  <div class="bg-vines bg-vines--right" aria-hidden="true">
+    <svg viewBox="0 0 80 1000" fill="none" preserveAspectRatio="xMaxYMin slice">
+      <path d="M90 0 Q60 150 75 280 Q90 410 55 510 Q20 610 70 750 Q120 890 80 1000" stroke="#1a6b3c" stroke-width="3" opacity="0.08" stroke-linecap="round" fill="none" />
+      <path d="M70 250 Q55 240 45 255" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M55 480 Q40 470 30 485" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M72 700 Q58 690 48 705" stroke="#1a6b3c" stroke-width="2" opacity="0.06" fill="none" stroke-linecap="round" />
+      <path d="M60 262 C64 255 70 255 66 262 Z" fill="#4ade80" opacity="0.08" />
+      <path d="M45 492 C49 485 55 485 51 492 Z" fill="#4ade80" opacity="0.07" />
+      <path d="M62 702 C66 695 72 695 68 702 Z" fill="#4ade80" opacity="0.08" />
+    </svg>
+  </div>
+
   <!-- Floating leaf decorations -->
   <div class="floating-leaf floating-leaf--1" aria-hidden="true">
     <svg viewBox="0 0 80 80" fill="none" width="100%" height="100%">
@@ -50,6 +74,24 @@
     <svg viewBox="0 0 55 55" fill="none" width="100%" height="100%">
       <path d="M27.5 52C16.5 41 5.5 33 2.75 22S8.25 2.75 19.25 1.5 41.25 5.5 46.75 14 52.25 33 41.25 41.25S33 49 27.5 52Z" fill="#1a6b3c" opacity="0.2" />
       <path d="M27.5 50V4" stroke="#1a6b3c" stroke-width="1" opacity="0.1" />
+    </svg>
+  </div>
+  <div class="floating-leaf floating-leaf--6" aria-hidden="true">
+    <svg viewBox="0 0 40 40" fill="none" width="100%" height="100%">
+      <path d="M20 38C12 30 4 24 2 16S6 2 14 1 30 4 34 10 38 24 30 30S24 34 20 38Z" fill="#4ade80" opacity="0.12" />
+      <path d="M20 36V4" stroke="#4ade80" stroke-width="0.8" opacity="0.08" />
+    </svg>
+  </div>
+  <div class="floating-leaf floating-leaf--7" aria-hidden="true">
+    <svg viewBox="0 0 65 65" fill="none" width="100%" height="100%">
+      <path d="M32.5 62C21 50 7 40 3.5 26S10.5 4 22.5 2 48 6.5 55.5 16 63.5 40 48.5 50S40 58 32.5 62Z" fill="#1a6b3c" opacity="0.15" />
+      <path d="M32.5 60V5" stroke="#1a6b3c" stroke-width="1" opacity="0.1" />
+    </svg>
+  </div>
+  <div class="floating-leaf floating-leaf--8" aria-hidden="true">
+    <svg viewBox="0 0 45 45" fill="none" width="100%" height="100%">
+      <path d="M22.5 43C14 33 5 27 2.5 18S7 2.5 15.5 1 33 4.5 38 11 42.5 27 33.5 34S27 40 22.5 43Z" fill="#4ade80" opacity="0.1" />
+      <path d="M22.5 41V4" stroke="#4ade80" stroke-width="0.8" opacity="0.07" />
     </svg>
   </div>
 
@@ -122,11 +164,23 @@
       <!-- Product 1: Restore -->
       <div id="restore" class="glass-case" data-side="left">
         <div class="glass-panel--case glass-strong">
-          <div class="case-botanical case-botanical--left" aria-hidden="true">
-            <svg viewBox="0 0 100 100" fill="none" width="100%" height="100%">
-              <path d="M0 100Q30 80 25 60Q20 40 40 25Q60 10 70 20" stroke="#1a6b3c" stroke-width="1.8" opacity="0.2" stroke-linecap="round" fill="none" />
-              <path d="M28 48C30 42 36 42 34 48C32 50 28 50 28 48Z" fill="#4ade80" opacity="0.15" />
-              <path d="M48 30C50 24 56 24 54 30C52 32 48 32 48 30Z" fill="#1a6b3c" opacity="0.15" />
+          <div class="case-vines case-vines--bl" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Main stem climbing up from bottom-left -->
+              <path d="M-10 210 Q30 180 25 150 Q20 120 50 95 Q80 70 110 75 Q130 78 140 68" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <!-- Branch stems -->
+              <path d="M25 150 Q45 140 60 150" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M50 95 Q30 85 20 95" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M90 78 Q105 70 115 80" stroke="#1a6b3c" stroke-width="1.4" opacity="0.18" stroke-linecap="round" fill="none" />
+              <!-- Tendril curl -->
+              <path d="M140 68 Q148 58 142 50" stroke="#1a6b3c" stroke-width="1" opacity="0.15" stroke-linecap="round" fill="none" />
+              <!-- Small leaves along the path -->
+              <path d="M30 162 C34 156 40 156 36 162 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M48 132 C52 126 58 126 54 132 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M36 88 C40 82 46 82 42 88 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M68 70 C72 64 78 64 74 70 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M108 78 C112 72 118 72 114 78 Z" fill="#4ade80" opacity="0.16" />
+              <path d="M132 65 C136 59 142 59 138 65 Z" fill="#1a6b3c" opacity="0.13" />
             </svg>
           </div>
 
@@ -155,11 +209,22 @@
       <!-- Product 2: Breathe -->
       <div id="breathe" class="glass-case" data-side="right">
         <div class="glass-panel--case glass-strong">
-          <div class="case-botanical case-botanical--right" aria-hidden="true">
-            <svg viewBox="0 0 80 80" fill="none" width="100%" height="100%">
-              <path d="M80 0Q60 20 55 40Q50 60 30 70Q10 80 0 70" stroke="#1a6b3c" stroke-width="1.8" opacity="0.2" stroke-linecap="round" fill="none" />
-              <path d="M50 32C52 26 58 26 56 32C54 34 50 34 50 32Z" fill="#4ade80" opacity="0.12" />
-              <path d="M22 62C24 56 30 56 28 62C26 64 22 64 22 62Z" fill="#1a6b3c" opacity="0.15" />
+          <div class="case-vines case-vines--tr" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Main stem cascading from top-right -->
+              <path d="M210 -10 Q175 25 180 55 Q185 85 155 110 Q125 135 95 130 Q75 127 65 140" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <!-- Branch stems -->
+              <path d="M180 55 Q160 65 145 55" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M155 110 Q175 120 185 110" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M115 128 Q100 136 90 126" stroke="#1a6b3c" stroke-width="1.4" opacity="0.18" stroke-linecap="round" fill="none" />
+              <!-- Tendril curl -->
+              <path d="M65 140 Q58 150 64 158" stroke="#1a6b3c" stroke-width="1" opacity="0.15" stroke-linecap="round" fill="none" />
+              <!-- Small leaves -->
+              <path d="M148 50 C152 44 158 44 154 50 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M172 92 C176 86 182 86 178 92 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M143 118 C147 112 153 112 149 118 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M108 130 C112 124 118 124 114 130 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M78 135 C82 129 88 129 84 135 Z" fill="#4ade80" opacity="0.16" />
             </svg>
           </div>
 
@@ -188,11 +253,22 @@
       <!-- Product 3: Calm -->
       <div id="calm" class="glass-case" data-side="left">
         <div class="glass-panel--case glass-strong">
-          <div class="case-botanical case-botanical--left" aria-hidden="true">
-            <svg viewBox="0 0 100 100" fill="none" width="100%" height="100%">
-              <path d="M0 100Q25 85 20 65Q15 45 35 30Q55 15 70 20" stroke="#1a6b3c" stroke-width="1.8" opacity="0.2" stroke-linecap="round" fill="none" />
-              <path d="M25 52C27 46 33 46 31 52C29 54 25 54 25 52Z" fill="#4ade80" opacity="0.12" />
-              <path d="M48 28C50 22 56 22 54 28C52 30 48 30 48 28Z" fill="#1a6b3c" opacity="0.15" />
+          <div class="case-vines case-vines--tl" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Main stem draping from top-left -->
+              <path d="M-10 -10 Q25 15 30 45 Q35 75 65 100 Q95 125 125 120 Q145 117 155 128" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <!-- Branch stems -->
+              <path d="M30 45 Q10 55 5 45" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M65 100 Q85 110 95 100" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M110 118 Q120 128 130 118" stroke="#1a6b3c" stroke-width="1.4" opacity="0.18" stroke-linecap="round" fill="none" />
+              <!-- Tendril -->
+              <path d="M155 128 Q162 138 156 145" stroke="#1a6b3c" stroke-width="1" opacity="0.15" stroke-linecap="round" fill="none" />
+              <!-- Leaves -->
+              <path d="M15 48 C19 42 25 42 21 48 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M52 102 C56 96 62 96 58 102 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M88 118 C92 112 98 112 94 118 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M128 120 C132 114 138 114 134 120 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M148 126 C152 120 158 120 154 126 Z" fill="#4ade80" opacity="0.16" />
             </svg>
           </div>
 
@@ -221,11 +297,22 @@
       <!-- Product 4: Immune -->
       <div id="immune" class="glass-case" data-side="right">
         <div class="glass-panel--case glass-strong">
-          <div class="case-botanical case-botanical--right" aria-hidden="true">
-            <svg viewBox="0 0 80 80" fill="none" width="100%" height="100%">
-              <path d="M80 0Q55 25 50 45Q45 65 25 72Q5 80 0 65" stroke="#1a6b3c" stroke-width="1.8" opacity="0.2" stroke-linecap="round" fill="none" />
-              <path d="M48 38C50 32 56 32 54 38C52 40 48 40 48 38Z" fill="#4ade80" opacity="0.12" />
-              <path d="M18 64C20 58 26 58 24 64C22 66 18 66 18 64Z" fill="#1a6b3c" opacity="0.15" />
+          <div class="case-vines case-vines--br" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Main stem climbing from bottom-right -->
+              <path d="M210 210 Q175 180 180 150 Q185 120 155 95 Q125 70 95 75 Q75 78 65 68" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <!-- Branch stems -->
+              <path d="M180 150 Q160 140 145 150" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M155 95 Q175 85 185 95" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M115 72 Q100 64 90 74" stroke="#1a6b3c" stroke-width="1.4" opacity="0.18" stroke-linecap="round" fill="none" />
+              <!-- Tendril -->
+              <path d="M65 68 Q58 78 64 85" stroke="#1a6b3c" stroke-width="1" opacity="0.15" stroke-linecap="round" fill="none" />
+              <!-- Leaves -->
+              <path d="M148 145 C152 139 158 139 154 145 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M172 92 C176 86 182 86 178 92 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M143 82 C147 76 153 76 149 82 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M108 70 C112 64 118 64 114 70 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M78 72 C82 66 88 66 84 72 Z" fill="#4ade80" opacity="0.16" />
             </svg>
           </div>
 
@@ -251,14 +338,37 @@
         </div>
       </div>
 
-      <!-- Product 5: Sleep -->
+      <!-- Product 5: Sleep (most overgrown — vines from both sides) -->
       <div id="sleep" class="glass-case" data-side="left">
         <div class="glass-panel--case glass-strong">
-          <div class="case-botanical case-botanical--left" aria-hidden="true">
-            <svg viewBox="0 0 100 100" fill="none" width="100%" height="100%">
-              <path d="M0 100Q30 80 25 55Q20 30 45 15Q70 0 85 10" stroke="#1a6b3c" stroke-width="1.8" opacity="0.2" stroke-linecap="round" fill="none" />
-              <path d="M30 42C32 36 38 36 36 42C34 44 30 44 30 42Z" fill="#4ade80" opacity="0.12" />
-              <path d="M58 18C60 12 66 12 64 18C62 20 58 20 58 18Z" fill="#1a6b3c" opacity="0.15" />
+          <div class="case-vines case-vines--left" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Left vine: bottom-left climbing up -->
+              <path d="M-10 210 Q30 180 25 150 Q20 120 50 95 Q80 70 110 75 Q130 78 145 65" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <path d="M25 150 Q45 140 60 150" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M50 95 Q30 85 20 95" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M30 162 C34 156 40 156 36 162 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M48 132 C52 126 58 126 54 132 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M36 88 C40 82 46 82 42 88 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M68 70 C72 64 78 64 74 70 Z" fill="#1a6b3c" opacity="0.15" />
+              <!-- Extra hanging leaf -->
+              <path d="M130 72 C134 66 140 66 136 72 Z" fill="#4ade80" opacity="0.14" />
+            </svg>
+          </div>
+          <div class="case-vines case-vines--right" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+              <!-- Right vine: top-right cascading down -->
+              <path d="M210 -10 Q175 25 180 55 Q185 85 155 110 Q125 135 95 130 Q75 127 60 140" stroke="#1a6b3c" stroke-width="2.2" opacity="0.28" stroke-linecap="round" fill="none" />
+              <path d="M180 55 Q160 65 145 55" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <path d="M155 110 Q175 120 185 110" stroke="#1a6b3c" stroke-width="1.6" opacity="0.2" stroke-linecap="round" fill="none" />
+              <!-- Extra branch creeping across the top -->
+              <path d="M210 20 Q180 15 160 25 Q145 32 130 25" stroke="#1a6b3c" stroke-width="1.4" opacity="0.18" stroke-linecap="round" fill="none" />
+              <path d="M148 50 C152 44 158 44 154 50 Z" fill="#4ade80" opacity="0.2" />
+              <path d="M172 92 C176 86 182 86 178 92 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M143 118 C147 112 153 112 149 118 Z" fill="#4ade80" opacity="0.18" />
+              <path d="M108 130 C112 124 118 124 114 130 Z" fill="#1a6b3c" opacity="0.15" />
+              <path d="M78 135 C82 129 88 129 84 135 Z" fill="#4ade80" opacity="0.16" />
+              <path d="M145 30 C149 24 155 24 151 30 Z" fill="#1a6b3c" opacity="0.14" />
             </svg>
           </div>
 
@@ -353,6 +463,43 @@
     </section>
 
   </div><!-- /.content -->
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <div class="footer-bg-mark">CONSERV</div>
+    <div class="footer-content">
+      <div class="footer-showcase">
+        <p class="footer-kicker">Showcase demo</p>
+        <div class="footer-logo">Conserv</div>
+        <p class="footer-note">
+          This is not a real wellness brand. Conserv is a fictional concept built to showcase what <strong>BLOK. WebDev Studio</strong> can craft for botanical, wellness, and lifestyle brands.
+        </p>
+      </div>
+      <div class="footer-links">
+        <h4>Demo status</h4>
+        <p>No orders are processed.</p>
+        <p>Formulas and ingredients are fictional.</p>
+        <p>Images are used as visual placeholders.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Studio</h4>
+        <p>BLOK. WebDev Studio</p>
+        <p>Concept, interface, and frontend build.</p>
+        <p><a href="https://www.fiverr.com/musa_murad" target="_blank" rel="noreferrer">View the studio on Fiverr</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BLOK. WebDev Studio showcase.</p>
+      <p>Fictional brand, real web design demo.</p>
+    </div>
+  </footer>
+
+  <!-- ============ Demo Badge ============ -->
+  <div class="demo-badge glass" id="demo-badge">
+    <span class="badge-label">DEMO SITE — Limited functionality</span>
+    <span class="studio-name">BLOK. WebDev Studio</span>
+    <a href="https://www.fiverr.com/musa_murad" target="_blank" class="fiverr-link">View on Fiverr &rarr;</a>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -107,3 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = setTimeout(updateStones, 100);
   });
 });
+
+// --- Demo badge: hide when embedded in iframe ---
+(function() {
+  'use strict';
+  var params = new URLSearchParams(window.location.search);
+  var inIframe = params.has('embed');
+  if (!inIframe) {
+    try { inIframe = window.self !== window.top; }
+    catch(e) { inIframe = true; }
+  }
+  if (inIframe) {
+    var badge = document.getElementById('demo-badge');
+    if (badge) badge.remove();
+  } else {
+    // Reveal badge with a 1s delay
+    setTimeout(function() {
+      var badge = document.getElementById('demo-badge');
+      if (badge) badge.classList.add('visible');
+    }, 1000);
+  }
+})();

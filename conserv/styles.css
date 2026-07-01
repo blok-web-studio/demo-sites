@@ -58,6 +58,29 @@ body::-webkit-scrollbar {
   pointer-events: none;
 }
 
+/* --- Background vine border — overgrown edges --- */
+.bg-vines {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-vines--left {
+  left: 0;
+}
+
+.bg-vines--right {
+  right: 0;
+}
+
+.bg-vines svg {
+  width: 100%;
+  height: 100%;
+}
+
 /* --- Content wrapper --- */
 .content {
   position: relative;
@@ -417,27 +440,54 @@ body::-webkit-scrollbar {
   letter-spacing: 0.02em;
 }
 
-/* --- Decorative botanical elements for cases --- */
-.case-botanical {
+/* --- Overgrown vines on product cases --- */
+.case-vines {
   position: absolute;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.5;
+  z-index: 1;
 }
 
-.case-botanical--left {
-  bottom: -10px;
-  left: -10px;
-  width: 100px;
-  height: 100px;
-  transform: rotate(20deg);
+.case-vines--bl {
+  bottom: -20px;
+  left: -15px;
+  width: 200px;
+  height: 200px;
 }
 
-.case-botanical--right {
-  top: -10px;
-  right: -10px;
-  width: 80px;
-  height: 80px;
-  transform: rotate(160deg);
+.case-vines--tr {
+  top: -20px;
+  right: -15px;
+  width: 200px;
+  height: 200px;
+}
+
+.case-vines--tl {
+  top: -20px;
+  left: -15px;
+  width: 200px;
+  height: 200px;
+}
+
+.case-vines--br {
+  bottom: -20px;
+  right: -15px;
+  width: 200px;
+  height: 200px;
+}
+
+.case-vines--left {
+  bottom: -20px;
+  left: -20px;
+  width: 200px;
+  height: 200px;
+}
+
+.case-vines--right {
+  top: -20px;
+  right: -20px;
+  width: 200px;
+  height: 200px;
 }
 
 /* --- Section 3: Greenhouse Exit --- */
@@ -668,6 +718,33 @@ body::-webkit-scrollbar {
   animation-duration: 23s;
 }
 
+.floating-leaf--6 {
+  top: 12%;
+  right: 12%;
+  width: 30px;
+  height: 30px;
+  animation-delay: -15s;
+  animation-duration: 19s;
+}
+
+.floating-leaf--7 {
+  bottom: 35%;
+  left: 2%;
+  width: 48px;
+  height: 48px;
+  animation-delay: -2s;
+  animation-duration: 26s;
+}
+
+.floating-leaf--8 {
+  top: 50%;
+  left: 12%;
+  width: 34px;
+  height: 34px;
+  animation-delay: -18s;
+  animation-duration: 21s;
+}
+
 @keyframes drift {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
@@ -681,6 +758,165 @@ body::-webkit-scrollbar {
   75% {
     transform: translate(8px, -12px) rotate(4deg);
   }
+}
+
+/* --- Footer --- */
+.footer {
+  background:
+    linear-gradient(135deg, rgba(26, 107, 60, 0.12), transparent 34%),
+    linear-gradient(to bottom, var(--bg, #eaf0e5), #c8d8c5);
+  padding: 7rem 5vw 3rem;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(26, 107, 60, 0.1);
+}
+
+.footer-bg-mark {
+  position: absolute;
+  bottom: -35px;
+  right: 4%;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(9rem, 30vw, 28rem);
+  font-style: italic;
+  line-height: 1;
+  color: #1a6b3c;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 1.2fr) repeat(2, minmax(190px, 0.6fr));
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.footer-logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  line-height: 0.9;
+  color: #1a6b3c;
+  margin-bottom: 1.25rem;
+}
+
+.footer-note {
+  max-width: 620px;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  line-height: 1.2;
+  color: #2a4a2a;
+  opacity: 0.88;
+}
+
+.footer-note strong {
+  color: #1a6b3c;
+  font-weight: 600;
+}
+
+.footer-kicker,
+.footer-links h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+  color: #1a2e1a;
+}
+
+.footer-links p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  margin-bottom: 0.7rem;
+  color: #2a4a2a;
+  opacity: 0.72;
+}
+
+.footer-links a {
+  color: #1a6b3c;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(26, 107, 60, 0.3);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: #0d4a28;
+  border-color: #0d4a28;
+}
+
+.footer-bottom {
+  position: relative;
+  z-index: 1;
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(26, 107, 60, 0.1);
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #3a5a3a;
+  opacity: 0.6;
+}
+
+/* --- Demo Badge --- */
+.demo-badge {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1.5rem;
+  z-index: 1000;
+  max-width: 320px;
+  border: 1px solid rgba(26, 107, 60, 0.25);
+  transform: translateY(150%);
+  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.demo-badge.glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(26, 107, 60, 0.2);
+}
+
+.demo-badge.visible {
+  transform: translateY(0);
+}
+
+.demo-badge .badge-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #1a2e1a;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.demo-badge .studio-name {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  color: #1a6b3c;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.demo-badge .fiverr-link {
+  font-family: 'DM Sans', sans-serif;
+  color: #2a4a2a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.demo-badge .fiverr-link:hover {
+  border-color: #1a6b3c;
+  color: #0d4a28;
 }
 
 /* --- Responsive --- */
@@ -725,6 +961,28 @@ body::-webkit-scrollbar {
 
   .entry-description {
     max-width: 100%;
+  }
+
+  .footer {
+    padding-top: 5rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .demo-badge {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+    text-align: center;
   }
 }
 
